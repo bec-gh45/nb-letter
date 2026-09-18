@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Open When ♡</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: #f7f1e8;
+  color: #4b3d35;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+/* =========================
+   HOME
+========================= */
+
+#home {
+  min-height: 100vh;
+  padding: 60px 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.header h1 {
+  margin: 0 0 10px;
+  font-size: 38px;
+  font-weight: normal;
+}
+
+.header p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.55;
+}
+
+.letters-grid {
+  width: 100%;
+  max-width: 850px;
+  margin: auto;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+/* =========================
+   LETTER CARD
+========================= */
+
+.letter-card {
+  background: #fffaf4;
+  border: 1px solid #e4d8cc;
+  border-radius: 4px;
+
+  padding: 35px 25px;
+
+  text-align: center;
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+.letter-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(70, 50, 40, 0.08);
+}
+
+.icon {
+  font-size: 30px;
+  margin-bottom: 18px;
+}
+
+.letter-card small {
+  display: block;
+
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+  font-size: 10px;
+
+  opacity: 0.45;
+
+  margin-bottom: 10px;
+}
+
+.letter-card h2 {
+  font-size: 20px;
+  font-weight: normal;
+
+  margin: 0;
+
+  line-height: 1.4;
+}
+
+.status {
+  margin-top: 18px;
+
+  font-size: 12px;
+
+  opacity: 0.45;
+}
+
+/* =========================
+   PASSWORD PAGE
+========================= */
+
+#lockPage {
+  display: none;
+
+  min-height: 100vh;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+}
+
+.lock-box {
+  width: 100%;
+  max-width: 370px;
+
+  text-align: center;
+}
+
+.back {
+  border: 0;
+  background: transparent;
+
+  color: #4b3d35;
+
+  cursor: pointer;
+
+  margin-bottom: 35px;
+
+  opacity: 0.55;
+
+  font-size: 13px;
+}
+
+.lock-box h1 {
+  font-size: 27px;
+  font-weight: normal;
+
+  line-height: 1.4;
+
+  margin-bottom: 12px;
+}
+
+.lock-box p {
+  opacity: 0.55;
+
+  font-size: 14px;
+
+  margin-bottom: 25px;
+}
+
+input {
+  width: 100%;
+
+  padding: 15px 20px;
+
+  border: 1px solid #d4c5b8;
+  border-radius: 30px;
+
+  background: white;
+
+  outline: none;
+
+  text-align: center;
+
+  font-size: 16px;
+}
+
+.unlock-button {
+  width: 100%;
+
+  padding: 15px;
+
+  border: 0;
+  border-radius: 30px;
+
+  margin-top: 12px;
+
+  background: #604b3e;
+
+  color: white;
+
+  cursor: pointer;
+
+  font-size: 14px;
+}
+
+#error {
+  color: #a14e4e;
+
+  font-size: 12px;
+
+  min-height: 18px;
+
+  margin-top: 15px;
+}
+
+/* =========================
+   ENVELOPE PAGE
+========================= */
+
+#envelopePage {
+  display: none;
+
+  min-height: 100vh;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  padding: 20px;
+}
+
+.envelope-title {
+  margin-bottom: 55px;
+
+  text-align: center;
+
+  opacity: 0.65;
+
+  font-size: 14px;
+}
+
+/* ENVELOPE */
+
+.envelope {
+  width: 320px;
+  height: 210px;
+
+  background: #d9bfa3;
+
+  position: relative;
+
+  cursor: pointer;
+
+  box-shadow: 0 20px 50px rgba(60, 40, 30, 0.15);
+}
+
+/* FRONT */
+
+.envelope::before {
+  content: "";
+
+  position: absolute;
+
+  z-index: 4;
+
+  bottom: 0;
+  left: 0;
+
+  border-left: 160px solid #ead6bd;
+  border-right: 160px solid #ead6bd;
+  border-top: 105px solid transparent;
+  border-bottom: 105px solid #e2c9ad;
+}
+
+/* FLAP */
+
+.flap {
+  position: absolute;
+
+  z-index: 5;
+
+  top: 0;
+  left: 0;
+
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-top: 125px solid #ceb08f;
+
+  transform-origin: top;
+
+  transition: transform 1s ease;
+}
+
+/* PAPER */
+
+.paper {
+  position: absolute;
+
+  z-index: 2;
+
+  width: 270px;
+  height: 175px;
+
+  left: 25px;
+  bottom: 10px;
+
+  background: #fffdf9;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+
+  transition: transform 1.2s ease 0.45s;
+}
+
+/* WAX SEAL */
+
+.seal {
+  position: absolute;
+
+  z-index: 7;
+
+  width: 56px;
+  height: 56px;
+
+  border-radius: 50%;
+
+  left: 132px;
+  top: 82px;
+
+  background: #8a4540;
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+
+  transition: opacity 0.3s ease;
+}
+
+/* OPEN ANIMATION */
+
+.envelope.open .flap {
+  transform: rotateX(180deg);
+
+  z-index: 1;
+}
+
+.envelope.open .paper {
+  transform: translateY(-155px);
+}
+
+.envelope.open .seal {
+  opacity: 0;
+}
+
+.tap-text {
+  margin-top: 45px;
+
+  opacity: 0.45;
+
+  font-size: 12px;
+}
+
+/* =========================
+   CANVA LETTER PAGE
+========================= */
+
+#letterPage {
+  display: none;
+
+  min-height: 100vh;
+
+  padding: 35px 15px 80px;
+}
+
+.letter-top {
+  width: 100%;
+  max-width: 760px;
+
+  margin: 0 auto 25px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.letter-top button {
+  background: transparent;
+
+  border: 0;
+
+  cursor: pointer;
+
+  color: #4b3d35;
+
+  opacity: 0.6;
+
+  font-size: 13px;
+}
+
+#letterCounter {
+  font-size: 12px;
+
+  opacity: 0.45;
+}
+
+.letter-images {
+  width: 100%;
+  max-width: 760px;
+
+  margin: auto;
+}
+
+.letter-images img {
+  width: 100%;
+  height: auto;
+
+  display: block;
+
+  margin: auto;
+
+  box-shadow: 0 10px 35px rgba(60, 40, 30, 0.10);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 650px) {
+
+  #home {
+    padding-top: 45px;
+  }
+
+  .letters-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header h1 {
+    font-size: 31px;
+  }
+
+  .envelope {
+    transform: scale(0.85);
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     HOME
+========================= -->
+
+<div id="home">
+
+  <div class="header">
+
+    <h1>Open When ♡</h1>
+
+    <p>
+      Some letters aren't meant to be opened right away.
+    </p>
+
+  </div>
+
+  <div
+    class="letters-grid"
+    id="lettersGrid">
+  </div>
+
+</div>
+
+
+<!-- =========================
+     PASSWORD PAGE
+========================= -->
+
+<div id="lockPage">
+
+  <div class="lock-box">
+
+    <button
+      class="back"
+      onclick="goHome()">
+
+      ← back to letters
+
+    </button>
+
+    <div style="font-size:35px; margin-bottom:20px;">
+      ♡
+    </div>
+
+    <h1 id="lockTitle"></h1>
+
+    <p>
+      You'll know the password when it's time.
+    </p>
+
+    <input
+      type="password"
+      id="passwordInput"
+      placeholder="Enter password">
+
+    <button
+      class="unlock-button"
+      onclick="checkPassword()">
+
+      Open this letter
+
+    </button>
+
+    <div id="error"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     ENVELOPE PAGE
+========================= -->
+
+<div id="envelopePage">
+
+  <div
+    class="envelope-title"
+    id="envelopeTitle">
+  </div>
+
+  <div
+    class="envelope"
+    id="envelope"
+    onclick="openEnvelope()">
+
+    <div class="paper"></div>
+
+    <div class="flap"></div>
+
+    <div class="seal">
+      ♡
+    </div>
+
+  </div>
+
+  <div class="tap-text">
+    tap the envelope to open
+  </div>
+
+</div>
+
+
+<!-- =========================
+     LETTER IMAGE
+========================= -->
+
+<div id="letterPage">
+
+  <div class="letter-top">
+
+    <button onclick="goHome()">
+      ← all letters
+    </button>
+
+    <span id="letterCounter"></span>
+
+  </div>
+
+  <div
+    class="letter-images"
+    id="letterImages">
+  </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   YOUR 8 LETTERS
+===================================================== */
+
+const letters = [
+
+  {
+    title: "u just arrived @SH",
+    password: "2602",
+    image: "shanghai.png"
+  },
+
+  {
+    title: "it's ur bday",
+    password: "nb21",
+    image: "birthday.png"
+  },
+
+  {
+    title: "u miss me",
+    password: "m2my",
+    image: "miss-me.png"
+  },
+
+  {
+    title: "it's christmas",
+    password: "251226",
+    image: "christmas.png"
+  },
+
+  {
+    title: "it's new year!",
+    password: "firstnyever",
+    image: "new-year.png"
+  },
+
+  {
+    title: "it's final szn",
+    password: "thiscontainsluck",
+    image: "final-szn.png"
+  },
+
+  {
+    title: "we fight :(",
+    password: "iloveu",
+    image: "fight.png"
+  },
+
+  {
+    title: "u need me",
+    password: "m2mbb",
+    image: "need-me.png"
+  }
+
+];
+
+
+/* =====================================================
+   WEBSITE FUNCTIONS
+   DON'T CHANGE ANYTHING BELOW
+===================================================== */
+
+let currentLetter = null;
+
+
+/* BUILD HOME */
+
+function buildHome() {
+
+  const grid =
+    document.getElementById("lettersGrid");
+
+  grid.innerHTML = "";
+
+
+  letters.forEach(function(letter, index) {
+
+    const unlocked =
+      localStorage.getItem("letter-" + index)
+      === "unlocked";
+
+
+    const card =
+      document.createElement("div");
+
+
+    card.className = "letter-card";
+
+
+    card.innerHTML = `
+
+      <div class="icon">
+
+        ${unlocked ? "♡" : "✉"}
+
+      </div>
+
+      <small>
+        Open this when
+      </small>
+
+      <h2>
+        ${letter.title}
+      </h2>
+
+      <div class="status">
+
+        ${unlocked ? "opened ♡" : "locked"}
+
+      </div>
+
+    `;
+
+
+    card.onclick = function() {
+
+      currentLetter = index;
+
+
+      if (unlocked) {
+
+        showEnvelope();
+
+      }
+
+      else {
+
+        showLock();
+
+      }
+
+    };
+
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================
+   SHOW PASSWORD
+========================= */
+
+function showLock() {
+
+  document.getElementById("home")
+    .style.display = "none";
+
+  document.getElementById("letterPage")
+    .style.display = "none";
+
+  document.getElementById("envelopePage")
+    .style.display = "none";
+
+  document.getElementById("lockPage")
+    .style.display = "flex";
+
+
+  document.getElementById("lockTitle")
+    .innerText =
+      "Open this when: "
+      + letters[currentLetter].title;
+
+
+  document.getElementById("passwordInput")
+    .value = "";
+
+
+  document.getElementById("error")
+    .innerText = "";
+
+
+  setTimeout(function() {
+
+    document.getElementById("passwordInput")
+      .focus();
+
+  }, 100);
+
+}
+
+
+/* =========================
+   CHECK PASSWORD
+========================= */
+
+function checkPassword() {
+
+  const input =
+    document
+    .getElementById("passwordInput")
+    .value
+    .trim();
+
+
+  const correctPassword =
+    letters[currentLetter].password;
+
+
+  if (
+    input.toLowerCase()
+    === correctPassword.toLowerCase()
+  ) {
+
+    localStorage.setItem(
+      "letter-" + currentLetter,
+      "unlocked"
+    );
+
+
+    showEnvelope();
+
+  }
+
+  else {
+
+    document.getElementById("error")
+      .innerText =
+      "not yet ♡ try again";
+
+  }
+
+}
+
+
+/* PRESS ENTER TO UNLOCK */
+
+document
+.getElementById("passwordInput")
+.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (event.key === "Enter") {
+
+      checkPassword();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   SHOW ENVELOPE
+========================= */
+
+function showEnvelope() {
+
+  document.getElementById("home")
+    .style.display = "none";
+
+  document.getElementById("lockPage")
+    .style.display = "none";
+
+  document.getElementById("letterPage")
+    .style.display = "none";
+
+  document.getElementById("envelopePage")
+    .style.display = "flex";
+
+
+  document.getElementById("envelopeTitle")
+    .innerText =
+      "Open this when: "
+      + letters[currentLetter].title;
+
+
+  document
+    .getElementById("envelope")
+    .classList
+    .remove("open");
+
+}
+
+
+/* =========================
+   OPEN ENVELOPE
+========================= */
+
+function openEnvelope() {
+
+  const envelope =
+    document.getElementById("envelope");
+
+
+  envelope.classList.add("open");
+
+
+  setTimeout(function() {
+
+    showLetter();
+
+  }, 1900);
+
+}
+
+
+/* =========================
+   SHOW CANVA IMAGE
+========================= */
+
+function showLetter() {
+
+  document.getElementById("envelopePage")
+    .style.display = "none";
+
+
+  document.getElementById("letterPage")
+    .style.display = "block";
+
+
+  const container =
+    document.getElementById("letterImages");
+
+
+  container.innerHTML = "";
+
+
+  const img =
+    document.createElement("img");
+
+
+  img.src =
+    letters[currentLetter].image;
+
+
+  img.alt =
+    "Open when "
+    + letters[currentLetter].title;
+
+
+  container.appendChild(img);
+
+
+  document.getElementById("letterCounter")
+    .innerText =
+      (currentLetter + 1)
+      + " / "
+      + letters.length;
+
+
+  window.scrollTo(0, 0);
+
+}
+
+
+/* =========================
+   GO HOME
+========================= */
+
+function goHome() {
+
+  document.getElementById("lockPage")
+    .style.display = "none";
+
+  document.getElementById("envelopePage")
+    .style.display = "none";
+
+  document.getElementById("letterPage")
+    .style.display = "none";
+
+  document.getElementById("home")
+    .style.display = "block";
+
+
+  buildHome();
+
+
+  window.scrollTo(0, 0);
+
+}
+
+
+/* START WEBSITE */
+
+buildHome();
+
+</script>
+
+</body>
+</html>
